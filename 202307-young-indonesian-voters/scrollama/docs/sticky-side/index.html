@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Scrollama: Sticky Side Example</title>
+	<meta name="description" content="Scrollama: Sticky Side Example" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="../../../js/echarts.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery-3.6.1.min.js"></script>
+	<script src="../../../js/uikit-3.15.24/js/uikit.min.js"></script>
+	<script src="../../../js/uikit-3.15.24/js/uikit-icons.min.js"></script>
+	<style>
+		#scrolly {
+			position: relative;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			background-color: #f3f3f3;
+			padding: 1rem;
+		}
+
+		#scrolly>* {
+			-webkit-box-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+		}
+
+		article {
+			position: relative;
+			padding: 0 1rem;
+			max-width: 20rem;
+		}
+
+		figure {
+			position: -webkit-sticky;
+			position: sticky;
+			width: 100%;
+			margin: 0;
+			-webkit-transform: translate3d(0, 0, 0);
+			-moz-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+			background-color: #8a8a8a;
+			z-index: 0;
+		}
+
+		figure p {
+			text-align: center;
+			padding: 1rem;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-moz-transform: translate(-50%, -50%);
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			font-size: 8rem;
+			font-weight: 900;
+			color: #fff;
+		}
+
+		.step {
+			margin: 0 auto 2rem auto;
+			background-color: #3b3b3b;
+			color: #fff;
+		}
+
+		.step:last-child {
+			margin-bottom: 0;
+		}
+
+		.step.is-active {
+			background-color: goldenrod;
+			color: #3b3b3b;
+		}
+
+		.step p {
+			text-align: center;
+			padding: 1rem;
+			font-size: 1.5rem;
+		}
+
+		#chart_8 {
+			height: 1800px;
+		}
+
+	</style>
+</head>
+
+<body>
+	<main>
+		<section id="intro">
+		</section>
+
+		<section id="scrolly">
+			<article>
+				<div class="step" data-step="1">
+					<p>STEP 1</p>
+				</div>
+				<div class="step" data-step="2">
+					<p>STEP 2</p>
+				</div>
+				<div class="step" data-step="3">
+					<p>STEP 3</p>
+				</div>
+				<div class="step" data-step="4">
+					<p>STEP 4</p>
+				</div>
+			</article>
+
+			<figure>
+				<div id="chart_8"></div>
+			</figure>
+		</section>
+
+		<section id="outro"></section>
+	</main>
+
+	<!-- <div class='debug'></div> -->
+	<script src="https://unpkg.com/d3@5.9.1/dist/d3.min.js"></script>
+	<script src="../scrollama.min.js"></script>
+	<script>
+		// using d3 for convenience
+		var main = d3.select("main");
+		var scrolly = main.select("#scrolly");
+		var figure = scrolly.select("figure");
+		var article = scrolly.select("article");
+		var step = article.selectAll(".step");
+
+		// initialize the scrollama
+		var scroller = scrollama();
+
+		// generic window resize listener event
+		function handleResize() {
+			// 1. update height of step elements
+			var stepH = Math.floor(window.innerHeight * 0.75);
+			step.style("height", stepH + "px");
+
+			var figureHeight = window.innerHeight / 2;
+			var figureMarginTop = (window.innerHeight - figureHeight) / 2;
+
+			figure
+				.style("height", figureHeight + "px")
+				.style("top", figureMarginTop + "px");
+
+			// 3. tell scrollama to update new element dimensions
+			scroller.resize();
+		}
+
+		// scrollama event handlers
+		function handleStepEnter(response) {
+			console.log(response);
+			// response = { element, direction, index }
+
+			// add color to current step only
+			step.classed("is-active", function (d, i) {
+				return i === response.index;
+			});
+
+			// update graphic based on step
+			// figure.select("p").text(response.index + 1);
+		}
+
+		function init() {
+
+			// 1. force a resize on load to ensure proper dimensions are sent to scrollama
+			handleResize();
+
+			// 2. setup the scroller passing options
+			// 		this will also initialize trigger observations
+			// 3. bind scrollama event handlers (this can be chained like below)
+			scroller
+				.setup({
+					step: "#scrolly article .step",
+					offset: 0.33,
+					debug: false
+				})
+				.onStepEnter(handleStepEnter);
+		}
+
+		// kick things off
+		init();
+	</script>
+
+	<script type="text/javascript">
+		// Chart Eight - Corruption Cases 2014-2023 VERSION 2
+
+		let years2 = [
+            '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015', '2014'
+        ]
+
+    let chartEight = echarts.init(document.getElementById('chart_8'));
+
+    const optionChartEight =  {
+    
+        xAxis: [
+            {
+            type: 'value',
+            min: 30,
+            max: 50,
+            axisTick: {
+                show: true,
+                length: 10
+            },
+            axisLabel: {
+                color: '#1c1c1c',
+                fontFamily: 'Helvetica',
+                fontSize: 20,
+                fontWeight: 600
+            },
+            splitLine: {
+                show: false
+            }
+            },
+            {
+            type: 'value',
+            min: 30,
+            max: 50,
+            axisTick: {
+                show: true,
+                length: 10
+            },
+            axisLabel: {
+                color: '#1c1c1c',
+                fontFamily: 'Helvetica',
+                fontSize: 20,
+                fontWeight: 600
+            },
+            splitLine: {
+                show: false
+            }
+            }
+            
+        ],
+        yAxis: [
+            {
+            type: 'category',
+            data: years2,
+            axisLabel: {
+            margin: 5,
+            verticalAlign: 'bottom',
+            padding: [0, 0, 60, 0],
+            color: '#333333',
+            fontFamily: 'Helvetica',
+            fontWeight: 600,
+            fontSize: 23
+            },
+            axisTick: {
+            show: false
+            },
+            splitLine: {
+            show: true,
+            lineStyle: {
+            color: '#1c1c1c',
+            width: 0.7
+            }
+            },
+            minorSplitLine: {
+            show: true
+            }
+            }
+        ],
+        
+        graphic: [
+        
+            {
+                type: 'group',
+                left: 120,
+                top: 97,
+                children: [
+                    {
+                    type: 'circle',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    shape: {
+                        r: 30
+                    },
+                    style: {
+                        stroke: "#1c1c1c",
+                        lineWidth: 33,
+                    }
+                    },
+                    {
+                    type: 'text',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    style: {
+                        fill: '#ffffff',
+                        width: 50,
+                        overflow: 'break',
+                        text: 'CPI score: 34/100',
+                        font: '16px Helvetica'
+                    }
+                    },
+                    {
+                    type: 'line',
+                    z: 100,
+                    rotation: Math.PI / 2,
+                    left: 30,
+                    top: 'middle',
+                        shape: {
+                        x1: -100,
+                        y1: 60,
+                        x2: -99,
+                        y2: 60},
+                        style: {
+                        stroke: "#1c1c1c",
+                        lineWidth: 39
+                        }
+                    }
+                ]
+            },
+
+            {
+                type: 'group',
+                left: 440,
+                top: 902,
+                children: [
+                    {
+                    type: 'circle',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    shape: {
+                        r: 23
+                    },
+                    style: {
+                        stroke: "#1c1c1c",
+                        lineWidth: 25,
+                    }
+                    },
+                    {
+                    type: 'text',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    style: {
+                        fill: '#ffffff',
+                        width: 50,
+                        overflow: 'break',
+                        text: '40',
+                        font: '25px Helvetica'
+                    }
+                    },
+                    {
+                    type: 'line',
+                    z: 100,
+                    rotation: Math.PI / 0.6,
+                    right: 10,
+                    top: 5,
+                        shape: {
+                        x1: -100,
+                        y1: 60,
+                        x2: -99,
+                        y2: 60},
+                        style: {
+                        stroke: "#1c1c1c",
+                        lineWidth: 39
+                        }
+                    }
+                ]
+            },
+
+            {
+                type: 'group',
+                left: 245,
+                top: 1110,
+                children: [
+                    {
+                    type: 'circle',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    shape: {
+                        r: 23
+                    },
+                    style: {
+                        stroke: "#1c1c1c",
+                        lineWidth: 25,
+                    }
+                    },
+                    {
+                    type: 'text',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    style: {
+                        fill: '#ffffff',
+                        width: 50,
+                        overflow: 'break',
+                        text: '38',
+                        font: '25px Helvetica'
+                    }
+                    },
+                    {
+                    type: 'line',
+                    z: 100,
+                    rotation: Math.PI / 2,
+                    left: 30,
+                    top: 'middle',
+                        shape: {
+                        x1: -100,
+                        y1: 60,
+                        x2: -99,
+                        y2: 60},
+                        style: {
+                        stroke: "#1c1c1c",
+                        lineWidth: 33
+                        }
+                    }
+                ]
+            },
+
+            {
+                type: 'group',
+                left: 235,
+                top: 1444,
+                children: [
+                    {
+                    type: 'circle',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    shape: {
+                        r: 23
+                    },
+                    style: {
+                        stroke: "#1c1c1c",
+                        lineWidth: 25,
+                    }
+                    },
+                    {
+                    type: 'text',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    style: {
+                        fill: '#ffffff',
+                        width: 50,
+                        overflow: 'break',
+                        text: '34',
+                        font: '25px Helvetica'
+                    }
+                    },
+                    {
+                    type: 'line',
+                    z: 100,
+                    rotation: Math.PI / 2,
+                    right: 30,
+                    top: 'middle',
+                        shape: {
+                        x1: -100,
+                        y1: 60,
+                        x2: -99,
+                        y2: 60},
+                        style: {
+                        stroke: "#1c1c1c",
+                        lineWidth: 39
+                        }
+                    }
+                ]
+            },
+
+        ],
+        
+            series: [
+            {
+            type: 'line',
+            data:  [
+                null, 34, 38, 37, 40, 38, 37, 37, 36, 34
+            ],
+            itemStyle: {
+            color: '#fb443c',
+            opacity: 0
+            }
+            }
+        ]
+    };
+
+
+    chartEight.setOption(optionChartEight);
+
+    window.onresize = function() {
+    chartEight.resize();
+    };
+	</script>
+</body>
+
+</html>

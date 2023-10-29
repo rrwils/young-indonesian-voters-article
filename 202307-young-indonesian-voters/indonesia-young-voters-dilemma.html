@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+
+<!-- This source code is licensed under CC-BY-SA-4.0 license found in the
+LICENSE file in the root directory of this source tree.  -->
+
+<html lang="en" dir="ltr">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Despite being the dominant voting bloc, young voters in Indonesia face persistent challenges in gaining representation within the political sphere. As the upcoming election approaches, a notable absence remains: a candidate who truly shows a genuine commitment to addressing the concerns and aspirations of the youth electorate.">
+    <meta property="og:image" content="images/ganjar-genz-banner.jpg">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@rachelrwil" />
+    <meta name="twitter:title" content="The Dilemma of Young Indonesian Voters Seeking Change" />
+    <meta name="twitter:description" content="As the upcoming election approaches, a notable absence remains: a candidate who truly shows a genuine commitment to addressing the concerns and aspirations of the youth electorate." />
+    <meta name="twitter:image" content="http://doc.gold.ac.uk/~rwils001/major-project//images/ganjar-genz-banner.jpg" />
+
+    <title>The Dilemma of Young Indonesian Voters Seeking Change</title>
+
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <!-- UIkit -->
+  	<link rel="stylesheet" href="js/uikit-3.15.24/css/uikit.min.css" />
+  	<script src="js/uikit-3.15.24/js/uikit.min.js"></script>
+  	<script src="js/uikit-3.15.24/js/uikit-icons.min.js"></script>
+  	<!-- eCharts V5 -->
+  	<script src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <!-- Scrollama -->
+    <script src="scrollama/build/scrollama.min.js"></script>
+    <!-- font -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300&display=swap" rel="stylesheet">
+
+    <style media="screen,print">
+
+        body {
+            font-family: 'Assistant', 'Helvetica', 'Arial', 'sans-serif';
+            color: #1c1c1c;
+            font-size: 1.3em;
+        }
+
+        h1 {
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+            color: #ffffff;
+            font-size: 2em;
+            font-weight: 600;
+
+        }
+
+        h2 {
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+            color: #1c1c1c;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+            color: #333333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+            color: #333333;
+            font-size: 16px;
+            font-weight: 200;
+        }
+
+        td span {
+            color: #fb443c;
+        }
+
+        td {
+            font-size: 17px;
+            font-weight: 200;
+        }
+
+        tr {
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: left;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        }
+
+        .flip-card-back {
+        transform: rotateY(180deg);
+        background-color: #ffffff;
+        }
+
+        .subhead-bg {
+            background-color: #1c1c1c;
+            color: #ffffff;
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+            font-size: 2.5em;
+            font-weight: 600;
+            padding: 0 8rem 0 8rem;
+        }
+
+        .img-caption {
+            font-family: 'Assistant', 'sans-serif';
+            color: #808080;
+            font-size: 0.85em;
+        }
+
+        .pullquote {
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+            color: #1c1c1c;
+            font-size: 1.4em;
+
+        }
+
+        .highlight-txt {
+            font-weight: 900;
+        }
+
+        #graph-title {
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+            font-size: 0.7em;
+            font-weight: 200;
+
+        }
+
+        #chart_1, #chart_2 {
+  			height: 500px;
+            max-width: 100%;
+  		}
+
+        #chart_3 {
+  			height: 600px;
+            max-width: 100%;
+  		}
+
+        #chart_8 {
+            height: 300px;
+            width: 300px;
+  		}
+
+          * {
+		box-sizing: border-box;
+		}
+
+		#scrolly {
+			position: relative;
+            background-color: #f6f6f6;
+		}
+
+		.article_scrolly {
+			position: relative;
+			padding: 10rem 0.5rem;
+			margin: 0 auto;
+			width: 60%;
+		}
+
+		.step {
+			margin: 0 auto 8rem auto;
+			width: 95%;
+			background-color: #1c1c1c;
+			color: #ffffff;
+		}
+
+		.step.is-active {
+			background-color: #991F1F;
+			color: #ffffff;
+		}
+
+		.step p {
+			text-align: left;
+			padding: 0rem 3rem 0rem 3rem;
+			font-family: 'Helvetica';
+			font-size: 1.1em;
+			line-height: 1.8;
+		}
+
+        #img {
+            height: 800px;
+        }
+
+        .social-links {
+            color: #ffffff;
+            padding: 5px;
+        }
+
+        .navbar {
+            font-family: 'Helvetica', 'Arial', 'sans-serif';
+            font-size: 0.5em;
+            font-weight: 400;
+            color: #333333;
+        }
+
+        #nav-text {
+            color: #ffffff;
+        }
+
+        #share-buttons {
+            margin-top: 200px;
+        }
+
+        #header {
+            margin-top: 150px;
+        }
+
+        #g-Indo-CPI-score-_Recovered_-box ,
+        #g-Indo-CPI-score-_Recovered_-box .g-artboard {
+            margin:0 auto;
+        }
+        #g-Indo-CPI-score-_Recovered_-box p {
+            margin:0;
+        }
+        #g-Indo-CPI-score-_Recovered_-box .g-aiAbs {
+            position:absolute;
+        }
+        #g-Indo-CPI-score-_Recovered_-box .g-aiImg {
+            position:absolute;
+            top:0;
+            display:block;
+            width:100% !important;
+        }
+        #g-Indo-CPI-score-_Recovered_-box .g-aiSymbol {
+            position: absolute;
+            box-sizing: border-box;
+        }
+        #g-Indo-CPI-score-_Recovered_-box .g-aiPointText p { white-space: nowrap; }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 {
+            position:relative;
+            overflow:hidden;
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 p {
+            font-family:Helvetica;
+            font-weight:400;
+            line-height:14px;
+            height:auto;
+            opacity:1;
+            letter-spacing:0em;
+            font-size:12px;
+            text-align:left;
+            color:rgb(0,0,0);
+            text-transform:none;
+            padding-bottom:0;
+            padding-top:0;
+            mix-blend-mode:normal;
+            font-style:normal;
+            position:static;
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 .g-pstyle0 {
+            font-weight:700;
+            line-height:24px;
+            height:24px;
+            font-size:20px;
+            color:rgb(74,74,74);
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 .g-pstyle1 {
+            font-weight:700;
+            line-height:26px;
+            height:26px;
+            font-size:21px;
+            color:rgb(74,74,74);
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 .g-pstyle2 {
+            height:14px;
+            color:rgb(255,255,255);
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 .g-pstyle3 {
+            line-height:25px;
+            height:25px;
+            font-size:21px;
+            color:rgb(255,255,255);
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 .g-pstyle4 {
+            height:14px;
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 .g-pstyle5 {
+            font-weight:700;
+            height:14px;
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 .g-pstyle6 {
+            line-height:27px;
+            height:27px;
+            font-size:22px;
+            color:rgb(255,255,255);
+        }
+        #g-Indo-CPI-score-_Recovered_-Artboard_1 .g-cstyle0 {
+            font-weight:700;
+        }
+
+        .y_axis {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        
+
+    </style>
+  </head>
+
+  <body>
+    
+    <!-- Header -->
+
+    <div class="uk-position-relative">
+        <div class="uk-height-small uk-background-cover uk-light uk-flex" style="background-color:#991F1F">
+
+            <div class="uk-position-top">
+                <nav class="uk-navbar-container uk-navbar-transparent">
+                    <div class="uk-container">
+                        <div uk-navbar="dropbar: true; dropbar-anchor: !.uk-navbar-container; target-y: !.uk-navbar-container">
+                            <div class="uk-navbar-left">
+
+                                <ul class="uk-navbar-nav">
+                                    <li class="uk-navbar-item">Rachel Wilson</li>
+                                </ul>
+                
+                            </div>
+                            <div class="uk-navbar-center navbar">
+                                <ul class="uk-navbar-nav">
+                                    <li>
+                                        <a href="" style="color: #ffffff;">Jump to<span uk-navbar-parent-icon></span></a>
+                                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2">
+                                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                                <li><a href="#part-two" class="uk-text-uppercase">Voting behaviour and orientation</a></li>
+                                                <li><a href="#part-three" class="uk-text-uppercase">The struggle of youth representation</a></li>
+                                                <li><a href="#part-four" class="uk-text-uppercase">The electability race</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+        
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            
+            <div class="uk-container" id="share-buttons">
+
+                <a href="https://www.facebook.com/sharer/sharer.php?u=http://doc.gold.ac.uk/~rwils001/major-project/indonesia-young-voters-dilemma.html" class="uk-icon-link uk-margin-small-right social-links" uk-icon="facebook" target="_blank"></a>
+                <a href="https://twitter.com/intent/tweet?text=the-dilemma-of-young-indonesian-voters-seeking-change&url=http://doc.gold.ac.uk/~rwils001/major-project//indonesia-young-voters-dilemma.html" class="uk-icon-link  uk-margin-small-right social-links" uk-icon="twitter" target="_blank"></a>
+                <a href="mailto:?subject=indonesia-young-voters-dilemma&body=http://doc.gold.ac.uk/~rwils001/major-project/indonesia-young-voters-dilemma.html" class="uk-icon-link social-links" uk-icon="forward" target="_blank"></a>
+                
+            </div>
+        
+        </div>
+    
+        
+    </div>
+
+    <div class="uk-position-z-index-negative" uk-sticky="bottom: +* +*">
+
+        <div class="uk-position-relative">
+            <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-color:#991F1F" uk-height-viewport>
+                
+                <div id="header" class="uk-align-center">
+
+                    <div class="uk-flex uk-flex-center">
+                        <div class="uk-margin-right"><img src="images/question-mark.png" width="100"></div>
+                    </div>
+            
+                    <div class="uk-flex uk-flex-center">
+                        <div class="uk-margin-right"><img src="images/anies-header.png" width="100"></div>
+                        <div class="uk-margin-right"><img src="images/prabowo-header.png" width="100"></div>
+                        <div><img src="images/ganjar-header.png" width="100"></div>
+                        <div class="uk-align-bottom uk-margin-right"><img src="images/paku-coblos.png" width="100"></div>
+                    </div>
+
+                    <h1 class="uk-width-2-3@m uk-text-center uk-margin-auto uk-margin-auto-vertical" uk-parallax="y: 30,0">The Dilemma of Young Indonesian Voters Seeking Change: <br>Frustrations, Choices and the Search for Representation</h1>
+                </div>
+            
+            </div>
+        
+            
+        </div>
+    </div>
+
+    
+    
+    <!-- Part One -->
+    
+    <div class="uk-section uk-section-default" id="main">
+        <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-bottom">
+            <p>Indonesia’s Generation Zs and Millennials are set to dominate the voting bloc in the upcoming election, wielding the power to shape the nation’s future. Despite their enthusiasm, the lack of political candidates who genuinely represent their aspirations and concerns has fuelled dissatisfaction, if not disengagement, among young voters.</p>
+
+            <p>“Many of these young people feel politics haven’t caught up with their concern,” said Dr Alexander Arifianto, a senior fellow with the Indonesia Programme at the S. Rajaratnam School of International Studies (RSIS) in Singapore.</p>
+
+            <p>With nearly 55 percent of the total electorate under the age of 40, the challenge for political parties and presidential candidates will be to engage these voters who are better educated, more critical and sensitive than the older generations.</p>
+
+
+            <p>While there is immense potential for political candidates to tap into the enthusiasm of young voters, they often resort to superficial methods engagement, even <a href="https://www.bbc.com/indonesia/articles/c51lqn7ndllo" target="_blank"><u>nominating celebrities as legislative candidates</a></u> to generate easy buzz and media attention.</p>
+                
+                
+        </div>
+
+        <div>
+            <img src="images/ganjar-genz-banner.jpg" alt="A banner showing Ganjar Pranowo with text saying pillar and hope of Generation Z">
+        </div>
+            
+        <div class="uk-container uk-width-3-5@m uk-padding-small">
+
+            <p class="img-caption uk-margin-medium-bottom">A banner promoting presidential candidate Ganjar Pranowo with the caption 'Pillar and Hope of Generation Z'.</p>
+
+            <p>The lack of initiatives to discuss programmes that address young voters’ concerns is likely to feed into their apathy and cynicism towards politicians and democratic institutions, namely political parties and the House of Representatives.</p>
+
+            <p>“There is a big disconnect between what they claim to be as political parties with what they actually do when it comes to addressing young voters’ concern,” Arifianto said.</p>
+        </div>
+
+        <div id="chart_1" class="uk-flex uk-flex-center uk-align-center uk-margin-top uk-width-3-5@m" uk-scrollspy="cls: uk-animation-slide-left; repeat: true">
+        </div>
+     
+        <p class="img-caption uk-padding-small uk-align-center uk-width-3-5@m">Source: Indikator</p>
+
+        <div class="uk-container uk-width-3-5@m uk-padding-small">
+
+            <p>Abigail Limuria (28) is a co-founder of the youth-led movement Bijak Memilih (meaning “choose wisely”) which aims to empower the youth to be informed voters through education on salient issues and party positions.</p>
+
+            <p>She said that while it is difficult to determine the exact level of apathy or enthusiasm among young people, surveys generally indicate a significant portion of them feeling politically frustrated.</p>
+
+            <p>“They care, but they are not sure whether their voices are being heard or whether it is possible to instigate change,” Limuria said.</p>
+
+            <h2 class="uk-margin-medium-top">Parties hesitant about adapting to young voters</h2>
+
+            <p>Despite prevailing cynicism, there is little motivation for political parties to alter their engagement strategy as it doesn’t guarantee electoral success especially when voter turnout is also expected to be high.</p>
+            
+
+        </div>
+
+        
+            <div id="chart_2" class="uk-flex uk-flex-center uk-align-center uk-margin-top uk-margin-bottom uk-width-3-5@m" uk-scrollspy="cls: uk-animation-slide-right; repeat: true">
+            </div>
+
+            <p class="img-caption uk-padding-small uk-align-center uk-width-3-5@m">Source: International Institute for Democracy and Electoral Assistance</p>
+       
+
+        <div class="uk-container uk-width-3-5@m uk-padding-small">
+
+            <p>A prime example was in the 2019 election when the Indonesian Solidarity Party (PSI), which had positioned itself as the party for millennials and calls its workers “bro” and “sis”, failed to secure seats in the national legislature and only performed well enough to have representation in the Jakarta provincial legislature and a few municipal legislatures.</p>
+        </div>
+
+        <div class="uk-container uk-width-5-6@m uk-margin-top">
+            <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-large-top" uk-grid>
+                <div>
+                    <div class="uk-background-default uk-align-left">
+                        <p>“Even parties that specifically try to appeal to young people like PSI and Gelora (Indonesian People’s Wave Party), their efforts are not considered credible because they are also tied to or align themselves with older generation politicians like Mr Jokowi or Mr Prabowo,” Arifianto said.</p>
+                        
+                        <p>“I think that also presents a credibility gap to many young people in addition to the lack of specific proposals or specific programmes parties could come up with,” he added.</p>
+
+                        <div class="uk-container uk-child-width-1-2 uk-text-right uk-margin-large-top">
+                            <span uk-icon="icon: triangle-right"></span>
+                            <p class="img-caption uk-align-right">
+                            A senior PSI member praises President Jokowi's accomplishments and work ethic and talks about <i>Jokowism</i> as a progressive ideology based on the current president's style of governance. 
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-background-default uk-padding">
+                        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/CtrW7HiMUQ1/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/reel/CtrW7HiMUQ1/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/reel/CtrW7HiMUQ1/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A post shared by Partai Solidaritas Indonesia (@psi_id)</a></p></div></blockquote> <script async src="//www.instagram.com/embed.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Sticky from Part One -->
+    <div class="uk-position-relative uk-position-z-index-zero">
+        <div class="uk-background-default uk-flex uk-flex-left uk-flex-stretch uk-height-xlarge uk-position-z-index-negative" uk-sticky="overflow-flip: true; end: 100%; offset: 50">
+            <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-xlarge-bottom">
+
+                <p>As candidates turn to social media to gain relevance and ramp up visibility in the eyes of the youth electorate, genuine efforts to address the issues of young people will trail behind the pursuit of online viral campaigns.</p>
+
+                <p>“Some have excelled in garnering more attention than the rest by funny twitter admins, ridiculous candidates et cetera, but none has done so in the level of substance in my opinion,” Limuria said.</p>
+
+                <p>Yoes Kenawas is a PhD candidate in political science at Northwestern University in Illinois with expertise in democratisation and political parties in Indonesia.</p>
+
+                <p>“In the upcoming election and in the past elections, it’s always a matter of engineering voters’ perception, and parties and politicians are good at it,” he said.</p>
+
+                <p>“The voter turnout will be high but not necessarily representing what we want,” Kenawas said.</p>
+
+                <p>Without meaningful engagement with young voters’ concerns, their ability to leverage their voting rights in their favour becomes limited.</p>
+
+            </div>
+        </div>
+    
+
+        <!-- End of Part One -->
+
+        <!-- Start of Part Two -->
+        
+            <div class="uk-background-default uk-padding uk-flex uk-flex-center uk-flex-middle uk-text-center uk-height-large subhead-bg" id="part-two" uk-height-viewport>
+                <div class="uk-flex uk-flex-column">
+                    <p><u>Part Two</u><br>Voting behaviour and orientation: <br> Priorities of young voters</p>
+
+                    <ul class="uk-iconnav uk-align-center">
+                        <li><a href="#main" uk-icon="icon: arrow-up"></a></li>
+                        <li><a href="#part-three" uk-icon="icon: arrow-down"></a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="uk-background-default uk-flex uk-flex-left uk-flex-stretch uk-height-xlarge uk-position-z-index-negative" uk-sticky="position: bottom; overflow-flip: true; start: -100%; end: 0">
+                <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-medium-top">
+
+                    <p>With the presidential election, many experts expect young voters to focus primarily on who the winning candidate is and who appears more likeable rather than delving into policy considerations.</p>
+                    
+                    <p>And due to the lack of notable programmatic differences between parties as in previous elections, voters are likely to align themselves with a political party that is affiliated with their preferred presidential candidate.</p>
+        
+                    <p>This means voting decisions, including the youth’s, will largely be driven by personality cues rather than an understanding of candidates’ policy positions.</p>
+
+                    <p>According to a 2022 survey by the Centre for Strategic and International Studies (CSIS), young voters have exhibited shifting preferences, reflecting a demand for integrity and visionary leadership.</p>
+
+                    
+        
+                </div>
+            </div>
+    </div>
+
+        
+            <div class="uk-section uk-width-5-6@m uk-align-center">
+                <section id="scrolly">
+                    <article class="article_scrolly">
+                        <div class="step" data-step="1">
+                                
+                                <p><span class="highlight-txt">More than 1 in 3 respondents prioritise anti-corruption and honesty</span> as the most essential characteristic they seek in a national leader, a notable increase from the 2019 survey.</p>
+
+                                <p id="graph-title" class="uk-text-italic uk-width-5-6@m uk-align-center uk-padding">According to you, which of the following leadership qualities is most needed to lead Indonesia in 2024?</p>
+                                <div id="chart_8" class="uk-flex uk-flex-center uk-align-center "></div>
+                                
+                        </div>
+                        <div class="step" data-step="2">
+                            
+                            <p>This finding indicates young people’s increased attention to issues of corruption within the government and their strong desire <span class="highlight-txt">for the next administration to prioritise anti-corruption agendas.</span></p>
+                        </div>
+                        <div class="step" data-step="3">
+                            <p>Additionally, young voters emphasise on a leader who can <span class="highlight-txt">drive change, navigate crises, and present innovative policies.</span></p>
+                        </div>
+                        <div class="step" data-step="4">
+                            <p>This underscores their underlying frustrations with the existing system, which they perceive as resistant to change and occupied by politicians who excel in rhetoric but struggle to develop concrete policies.</p>
+                        </div>
+                    </article>
+                </section>
+            </div>
+
+            <div class="uk-section uk-section-default">
+                <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-bottom">
+                    <p>Stella Nostra, a 24-year-old Gen-Z, said young people often witness public officials failing to address their concerns and interests “due to corruption, ignorance, lack of transparency, and disconnection”.</p>
+
+                    <p>“Therefore, they feel that public institutions are not delivering on their mandates, are not transparent in their decision-making processes, and are not prioritising public goods,” she said.</p>
+
+                    <p>Senior fellow Dr Arifianto said, "When they see TV and social media coverage about the House of Representatives, they see a body that’s very fractious or becoming more of a stumbling block rather than contributing anything positive to Indonesia as a democratic experience."</p>
+
+                    <p>Eroding public trust in officials as well as government institutions is further exacerbated by a series of corruption cases involving as many as five cabinet ministers since the start of the Jokowi administration in 2014.
+                    </p>
+
+                    <p>The most recent incident was in May implicating <a href="https://jakartaglobe.id/news/johnny-plate-becomes-first-active-minister-to-be-named-graft-suspect-by-ago" target="_blank"><u>the IT minister Johnny G Plate in an alleged million-dollar corruption scandal linked to a telecommunications infrastructure development project</u>.</a></p>
+
+                    <p>The monitoring and prosecuting capacity of the country’s main anti-graft agency has also been undermined following <a href="https://www.reuters.com/article/us-indonesia-corruption/indonesia-revises-law-to-put-checks-on-anti-graft-agency-sparks-protests-idUSKBN1W20JT" target="_blank"><u>a legislative amendment in 2019</u></a>. 
+                    </p>
+
+                </div>
+
+                <div class="uk-padding-small"></div>
+
+                <div class="uk-container uk-width-5-6@m uk-align-center uk-margin-remove-bottom" id="timeline">
+                    <h3>Indonesia's Corruption Perception Index (CPI) rating since 2014</h3>
+                    <h4>The country has experienced a regression over the past few years</h4>
+                </div>
+                
+
+                <div class="uk-container">
+
+                    <div id="g-Indo-CPI-score-_Recovered_-box" class="ai2html">
+
+                        <!-- Artboard: Artboard_1 -->
+                        <div id="g-Indo-CPI-score-_Recovered_-Artboard_1" class="g-artboard" style="max-width: 796px;max-height: 1259px" data-aspect-ratio="0.632" data-min-width="0">
+                    <div style="padding: 0 0 158.1326% 0;"></div>
+                            <img id="g-Indo-CPI-score-_Recovered_-Artboard_1-img" class="g-Indo-CPI-score-_Recovered_-Artboard_1-img g-aiImg" alt="" src="Indo-CPI-score-_Recovered_-Artboard_1.jpg"/>
+                            <div id="g-ai0-1" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:6.6302%;margin-top:-15.5px;left:11.2879%;width:44px;">
+                                <p class="g-pstyle0">30</p>
+                            </div>
+                            <div id="g-ai0-2" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:6.6302%;margin-top:-15.5px;left:50.9418%;width:44px;">
+                                <p class="g-pstyle0">40</p>
+                            </div>
+                            <div id="g-ai0-3" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:6.6302%;margin-top:-15.5px;left:70.735%;width:44px;">
+                                <p class="g-pstyle0">45</p>
+                            </div>
+                            <div id="g-ai0-4" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:6.6302%;margin-top:-15.5px;left:90.6382%;width:44px;">
+                                <p class="g-pstyle0">50</p>
+                            </div>
+                            <div id="g-ai0-5" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:6.6302%;margin-top:-15.5px;left:31.126%;width:44px;">
+                                <p class="g-pstyle0">35</p>
+                            </div>
+                            <div id="g-ai0-6" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:9.0421%;margin-top:-16.8px;left:4.6996%;width:69px;">
+                                <p class="g-pstyle1">2014</p>
+                            </div>
+                            <div id="g-ai0-7" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:11.4589%;margin-top:-16.2px;left:19.2219%;width:55px;">
+                                <p class="g-pstyle2">CPI</p>
+                                <p class="g-pstyle2">score:</p>
+                            </div>
+                            <div id="g-ai0-8" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:13.6697%;margin-top:-16.1px;left:19.4304%;width:45px;">
+                                <p class="g-pstyle3">34</p>
+                            </div>
+                            <div id="g-ai0-9" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:14.8598%;margin-top:-9px;left:38.7311%;width:191px;">
+                                <p class="g-pstyle4"><span class="g-cstyle0">Jokowi </span>is sworn in as president</p>
+                            </div>
+                            <div id="g-ai0-10" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:17.225%;margin-top:-16.8px;left:4.6895%;width:69px;">
+                                <p class="g-pstyle1">2015</p>
+                            </div>
+                            <div id="g-ai0-11" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:25.4078%;margin-top:-16.8px;left:4.6795%;width:69px;">
+                                <p class="g-pstyle1">2016</p>
+                            </div>
+                            <div id="g-ai0-12" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:33.5906%;margin-top:-16.8px;left:4.6695%;width:69px;">
+                                <p class="g-pstyle1">2017</p>
+                            </div>
+                            <div id="g-ai0-13" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:43.0309%;margin-top:-30.6px;left:54.7255%;width:201px;">
+                                <p class="g-pstyle5">House speaker Setya Novanto</p>
+                                <p class="g-pstyle4">is sentenced to 15 years in prison</p>
+                                <p class="g-pstyle4">for theft of public funds from</p>
+                                <p class="g-pstyle4">a national ID card programme</p>
+                            </div>
+                            <div id="g-ai0-14" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:41.7734%;margin-top:-16.8px;left:4.6595%;width:69px;">
+                                <p class="g-pstyle1">2018</p>
+                            </div>
+                            <div id="g-ai0-15" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:49.9562%;margin-top:-16.8px;left:4.6495%;width:69px;">
+                                <p class="g-pstyle1">2019</p>
+                            </div>
+                            <div id="g-ai0-16" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:49.736%;margin-top:-9px;left:17.0392%;width:229px;">
+                                <p class="g-pstyle5">Social affairs minister Idrus Marham</p>
+                            </div>
+                            <div id="g-ai0-17" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:51.0452%;margin-top:-17.5px;left:55.753%;width:47px;">
+                                <p class="g-pstyle6">40</p>
+                            </div>
+                            <div id="g-ai0-18" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:51.9917%;margin-top:-23.4px;left:17.1014%;width:190px;">
+                                <p class="g-pstyle4">is found guilty of embezzlement</p>
+                                <p class="g-pstyle4">related to a power plant project</p>
+                            </div>
+                            <div id="g-ai0-19" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:52.1194%;margin-top:-9px;left:63.7038%;width:214px;">
+                                <p class="g-pstyle5">Deputy speaker Taufik Kurniawan</p>
+                            </div>
+                            <div id="g-ai0-20" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:53.803%;margin-top:-16.2px;left:63.8184%;width:189px;">
+                                <p class="g-pstyle4">is convicted for receiving bribes</p>
+                                <p class="g-pstyle4">in the allocation of public funds</p>
+                            </div>
+                            <div id="g-ai0-21" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:56.6948%;margin-top:-30.6px;left:17.0783%;width:236px;">
+                                <p class="g-pstyle4">KPK bill is passed into law by the House</p>
+                                <p class="g-pstyle4">reforming the anti-graft agency's powers</p>
+                                <p>&nbsp;</p>
+                            </div>
+                            <div id="g-ai0-22" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:57.2197%;margin-top:-16.2px;left:57.6561%;width:258px;">
+                                <p class="g-pstyle4"><span class="g-cstyle0">Jokowi </span>begins his second term as president</p>
+                            </div>
+                            <div id="g-ai0-23" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:58.139%;margin-top:-16.8px;left:4.6394%;width:69px;">
+                                <p class="g-pstyle1">2020</p>
+                            </div>
+                            <div id="g-ai0-24" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:62.336%;margin-top:-30.6px;left:52.7146%;width:217px;">
+                                <p class="g-pstyle5">Sports minister Imam Nahrawi</p>
+                                <p class="g-pstyle4">is convicted for bribery in the</p>
+                                <p class="g-pstyle4">disbursement of government funding</p>
+                            </div>
+                            <div id="g-ai0-25" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:66.4013%;margin-top:-16.8px;left:4.6292%;width:69px;">
+                                <p class="g-pstyle1">2021</p>
+                            </div>
+                            <div id="g-ai0-26" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:70.4552%;margin-top:-37.8px;left:50.0786%;width:241px;">
+                                <p class="g-pstyle5">Social affairs minister Juliari Batubara</p>
+                                <p class="g-pstyle4">is sentenced to 12 years in prison for</p>
+                                <p class="g-pstyle4">receiving kickbacks related to public</p>
+                                <p class="g-pstyle4">COVID-19 aid distribution</p>
+                            </div>
+                            <div id="g-ai0-27" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:70.201%;margin-top:-30.6px;left:15.6164%;width:211px;">
+                                <p class="g-pstyle5">Fisheries minister Edhy Prabowo</p>
+                                <p class="g-pstyle4">is found guilty of taking bribes</p>
+                                <p class="g-pstyle4">linked to lobster larvae exports</p>
+                            </div>
+                            <div id="g-ai0-28" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:75.7622%;margin-top:-30.6px;left:55.6346%;width:252px;">
+                                <p class="g-pstyle5">House deputy speaker Azis Syamsuddin</p>
+                                <p class="g-pstyle4">is found guilty of bribery to</p>
+                                <p class="g-pstyle4">evade a graft investigation</p>
+                            </div>
+                            <div id="g-ai0-29" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:74.5841%;margin-top:-16.8px;left:4.6193%;width:69px;">
+                                <p class="g-pstyle1">2022</p>
+                            </div>
+                            <div id="g-ai0-30" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:77.8976%;margin-top:-17.5px;left:34.8414%;width:47px;">
+                                <p class="g-pstyle6">34</p>
+                            </div>
+                            <div id="g-ai0-31" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:82.7669%;margin-top:-16.8px;left:4.6093%;width:69px;">
+                                <p class="g-pstyle1">2023</p>
+                            </div>
+                            <div id="g-ai0-32" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:85.7245%;margin-top:-45px;left:21.8081%;width:173px;">
+                                <p class="g-pstyle5">Trade ministry official</p>
+                                <p class="g-pstyle5">Indrasari Wisnu Wardhana</p>
+                                <p class="g-pstyle4">is convicted of corruption</p>
+                                <p class="g-pstyle4">linked to the issuance of</p>
+                                <p class="g-pstyle4">palm oil export permits</p>
+                            </div>
+                            <div id="g-ai0-33" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:86.5667%;margin-top:-30.6px;left:55.5675%;width:173px;">
+                                <p class="g-pstyle5">IT minister Johnny G Plate</p>
+                                <p class="g-pstyle4">is suspected of graft related</p>
+                                <p class="g-pstyle4">to a telephony project</p>
+                            </div>
+                            <div id="g-ai0-34" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:91.4773%;margin-top:-15.5px;left:31.2074%;width:44px;">
+                                <p class="g-pstyle0">35</p>
+                            </div>
+                            <div id="g-ai0-35" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:91.4773%;margin-top:-15.5px;left:50.7538%;width:44px;">
+                                <p class="g-pstyle0">40</p>
+                            </div>
+                            <div id="g-ai0-36" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:91.4773%;margin-top:-15.5px;left:70.735%;width:44px;">
+                                <p class="g-pstyle0">45</p>
+                            </div>
+                            <div id="g-ai0-37" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:91.4773%;margin-top:-15.5px;left:11.3882%;width:44px;">
+                                <p class="g-pstyle0">30</p>
+                            </div>
+                            <div id="g-ai0-38" class="g-fl-layout-svg-screenshot-container g-aiAbs g-aiPointText" style="top:91.5567%;margin-top:-15.5px;left:90.1811%;width:44px;">
+                                <p class="g-pstyle0">50</p>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+                <p class="img-caption uk-padding-small uk-align-center uk-width-3-5@m">Source: CPI ratings from Transparency International</p>
+
+                <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-bottom">
+                    <p>All these developments have had a severe impact on the country’s corruption perception rating, which declined to 34 index points in 2022, the lowest level since 2015. Despite this regression, the Jokowi administration appears to be brushing off the issue with no demonstration of genuine commitment to fight corruption.
+                    </p>
+
+                </div>
+
+
+                <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-bottom">
+
+                    <h2 class="uk-margin-medium-top">Young voters' needs</h2>
+
+                    <p>The worry about corruption, however, is not exclusive to young people, and they are also not a homogenous voting bloc with identical interests and worries.</p>
+
+                    <p>While reliable information on variations within the youth electorate is lacking, differences can be expected between rural and urban youths, for instance.</p>
+                </div>
+
+                <div class="uk-flex uk-flex-center uk-flex-middle uk-background-cover" data-src="images/pkb-banner.jpg" alt="A peddler and a sign showing one of the legislative candidates from the National Awakening Party (PKB) for Banten province." uk-img id="img">
+
+                </div>
+                <div class="uk-container uk-width-3-5@m uk-padding-small">
+                    <p class="img-caption">A peddler and a sign showing one of the legislative candidates from the National Awakening Party (PKB) for Banten province.</p>
+                </div>
+
+            </div>
+                
+        
+    
+    <!-- Sticky from Part Two  -->
+    <div class="uk-position-relative uk-position-z-index-zero">
+        <div class="uk-background-default uk-flex uk-flex-left uk-flex-stretch uk-height-xlarge uk-position-z-index-negative" uk-sticky="overflow-flip: true; end: 100%; offset: 50">
+
+            <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-xlarge-bottom">
+                            
+                            
+                <p>Nonetheless, given that Gen-Zs are entering the workforce and Millennials are becoming part of the sandwich generation, caring for both their children and ageing parents, employment is a key area of concern for this demographic.</p>
+
+                <p>“Young people seem to care more about issues affecting their immediate job or economic security, housing issues or assistance for credit so they could buy affordable houses, or some kind of subsidy schemes for young families who are struggling to make ends meet,” Arifianto said.</p>
+
+                <p>Climate change is another issue that resonates particularly deeply with young, educated and urban voters who are more aware of its dangers than the older generations. Yet, no parties or political candidates have tried to win over young voters by proposing specific policies on any of these matters.</p>
+                            
+            </div>
+                
+        </div>
+
+        <!-- End of Part Two -->
+    
+        <!-- Start of Part Three -->
+        
+                
+            <div class="uk-background-default uk-padding uk-flex uk-flex-center uk-flex-middle uk-text-center uk-height-large subhead-bg" id="part-three" uk-height-viewport>
+
+                <div class="uk-flex uk-flex-column">
+                    <p><u>Part Three</u><br>Struggle for youth representation and inclusion in politics</p>
+
+                    <ul class="uk-iconnav uk-align-center">
+                        <li><a href="#part-two" uk-icon="icon: arrow-up"></a></li>
+                        <li><a href="#part-four" uk-icon="icon: arrow-down"></a></li>
+                    </ul>
+                </div>
+                    
+            </div>
+
+            <div class="uk-background-default uk-flex uk-flex-left uk-flex-stretch uk-height-xlarge uk-position-z-index-negative" uk-sticky="position: bottom; overflow-flip: true; start: -100%; end: 0">
+                    <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-medium-top uk-margin-bottom">
+    
+                        <p>Despite the significant size of the under-40 electorate, their representation in parliament remains alarmingly low. In the 2019 election, <a href="https://nasional.kompas.com/read/2019/09/04/15462151/anggota-dpr-terpilih-terdiri-dari-5026-persen-wajah-lama-8052-persen-laki" target="_blank"><u>only 16 percent of elected legislative members were between the age of 21 and 40</u></a>.</p>
+                        
+                        <p>Youth representation in the political arena is essential to elevate young people’s concerns and enable their active participation in shaping strategies that address their specific needs, and young politicians are well-positioned to bridge this gap.</p>
+            
+                        <p>Cakra Yudi Putra (27) ran in the 2019 election as a legislative candidate for the Justice and Unity Party (PKP). At the time, he observed parties showing a greater openness towards young politicians, prompting him to seize the opportunity and represent young voters in politics.</p>
+
+                        <p>However, Putra has encountered challenges in having his voice heard due to “party bureaucracy and hierarchy” and feels that young people are often treated as mere tokens by political parties.</p>
+                        
+                    </div>
+            </div>
+    </div>
+
+    
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-background-cover" data-src="images/cakra-yudi-putra.jpeg" alt="Cakra Yudi Putra communicating with a local community in Central Jakarta in 2019" uk-img id="img">
+                
+            </div>
+                
+            <div class="uk-container uk-width-3-5@m uk-padding-small uk-margin-bottom">
+
+                <p class="img-caption uk-margin-medium-bottom">Cakra Yudi Putra making an impromptu visit or <i>'blusukan'</i> to communicate with a local community  in Central Jakarta in 2019 (Cakra Yudi Putra)</p>
+
+                <p>“As a youth politician, most of us cannot make a decision at a strategic level,” he said. “We can say that many parties right now are only recruiting youths for the sake of representation on paper but turns out there is no significant or meaningful participation in the party decision making.”</p>
+                
+                <p>Other explanations for low youth representation in political parties include parties’ negative reputation, which deters young people from joining, and the high cost of running in an election even with standard campaign expenses, as well as the practice of “money politics” or <a href="https://theconversation.com/a-third-of-indonesian-voters-bribed-during-election-how-and-why-100166" target="_blank"><u>vote-buying which is still pervasive in Indonesian politics</u></a>.</p>
+
+                <p>"The youth that are interested in running for a political position, they are not interested in joining a political party," Putra said.</p>
+
+                <p>A CSIS survey on young voters found that while 15 percent of respondents expressed an interest in running for public office, only 1 percent indicated a desire to join political parties. This highlights the disconnect between parties and the youth, according to Putra.</p>
+                    
+                <p>"But most of them are engaged in youth community organisations, student councils et cetera because they believe that social mechanism is way more effective to voice out their concerns instead of being engaged in political parties," he added.</p>
+
+            </div>
+
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-background-cover" data-src="images/faldo-maldini.jpg" alt="Faldo Maldini speaking at a conference in the Ministry of State Secretariat office" uk-img id="img">
+                
+            </div>
+                    
+      
+
+    <!-- Sticky from Part Three -->
+    <div class="uk-position-relative uk-position-z-index-zero">
+        <div class="uk-background-default uk-flex uk-flex-left uk-flex-stretch uk-height-xlarge uk-position-z-index-negative" uk-sticky="overflow-flip: true; end: 100%; offset: 50">
+
+                
+            <div class="uk-container uk-container-xlarge uk-height-xlarge uk-width-3-5@m uk-padding-small uk-margin-xlarge-bottom">
+                <p class="img-caption uk-margin-medium-bottom">Faldo Maldini speaking at a conference in the Ministry of State Secretariat's office. (Faldo Maldini/Instagram)</p>
+
+                <p>
+                    Faldo Maldini (32) is a politician with the Indonesian Solidarity Party (PSI) after leaving the National Mandate Party (PAN) in 2019. He is currently serving as a special staff in the Ministry of State Secretary. He entered politics at the age of 25, believing that politics is the fastest way to bring change.
+                </p>    
+
+                <p>
+                    “I have to fight for my position as a spokesperson,” he said. “The young politicians you see nowadays who still survive are people who always try to survive in internal political party competition and external party [competition].”
+                </p>
+
+                <p>
+                    “I’m pretty sure [parties] always say they care about the youth; they think the youth can make a change. But if you see the structure of the party: old. The leader: no youth, no young guns,” Maldini said.
+                </p>
+
+                <p>He believes there should be finance regulation to create a level playing field especially for those who want to join politics, and parties should implement the merit system, strengthen the cadre capacity and “put a serious position on ideas” beyond nationalism and religion.</p>
+
+                <p>Kenawas, an expert in <a href="https://indonesiaatmelbourne.unimelb.edu.au/dynastic-politics-indonesias-new-normal/" target="_blank"><u>dynastic politics in Indonesia</u></a>, said, "If I come from an ordinary background, my family’s not a politician or an official, not an oligarch and I want to run for an election, the chance to be nominated, to fight a good campaign, and win the election is very small."</p>
+
+            </div>
+                
+        </div>
+    <!-- End of Part Three -->
+    
+        <!-- Part Four -->
+        
+        <div class="uk-background-default uk-padding uk-flex uk-flex-center uk-flex-middle uk-text-center uk-height-large subhead-bg" id="part-four" uk-height-viewport>
+
+            <div class="uk-flex uk-flex-column">
+                <p><u>Part Four</u><br>The electability race:<br> Who is the most prominent presidential candidate?</p>
+
+                <ul class="uk-iconnav uk-align-center">
+                    <li><a href="#part-three" uk-icon="icon: arrow-up"></a></li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <div class="uk-background-default uk-flex uk-flex-left uk-flex-stretch uk-height-xlarge uk-position-z-index-negative" uk-sticky="position: bottom; overflow-flip: true; start: -100%; end: 0">
+            <div class="uk-container uk-container-large uk-width-3-5@m uk-padding-small uk-margin-medium-top uk-margin-medium-bottom">
+
+                <p>With seven months remaining until the election, the competition seems to be the fiercest between two of the three presidential candidates, namely Ganjar Pranowo and Prabowo Subianto.</p>
+
+                <p>Ganjar Pranowo is generally popular among Millennials, but Prabowo’s appeal to Gen-Z has been unexpected.</p>
+
+                <p>In 1998 Indonesia saw massive protests triggered by the Asian financial crisis and widespread dissatisfaction with corruption and lack of political freedoms. Prabowo, a general at the time, played a role in the military’s response to the unrest and was involved in alleged human rights violations. His role and actions during that time remain controversial.</p>
+
+                
+            </div>
+        </div>
+    </div>
+
+                
+    
+    
+        <!-- Table showing electability of 3 presidential candidates -->
+        <div class="uk-container uk-container-large uk-margin-medium-bottom uk-padding-top uk-margin-top">
+            <div class="uk-width-3-5@m uk-align-center uk-padding-top">
+                <h3>The electability of presidential candidates according to various polls</h3>
+                <h4>Prabowo dominates most surveys and Ganjar appears as a strong contender</h4>
+            </div>
+        
+
+            <div class="uk-container uk-container-small uk-overflow-auto">
+                <table class="uk-table uk-table-small uk-table-divider uk-width-3-5@m">
+                    <thead>
+                        <tr>
+                            <th class="uk-text-emphasis uk-text-right uk-text-middle uk-text-large">%</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Lembaga Survei Jakarta</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Poligov</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Political Weather Station</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Algoritma Research and Consulting</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Populi</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Indopol</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Indonesia Political Opinion</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Lembaga Survei Nasional</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Survei Litbang Kompas</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Indikator Politik Indonesia</th>
+                            <th class="uk-text-capitalize uk-text-secondary uk-text-middle">Saiful Mujani Research and Consulting*</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="uk-text-bolder">Prabowo Subianto</td>
+                            <td class="uk-text-center uk-text-middle"><span>40.3</span></td>
+                            <td class="uk-text-center uk-text-middle"><span>32.9</span></td>
+                            <td class="uk-text-center uk-text-middle"><span>40.5</span></td>
+                            <td class="uk-text-center uk-text-middle">30.8</td>
+                            <td class="uk-text-center uk-text-middle">33.4</td>
+                            <td class="uk-text-center uk-text-middle"><span>31.2</span></td>
+                            <td class="uk-text-center uk-text-middle"><span>37.2</span></td>
+                            <td class="uk-text-center uk-text-middle"><span>38.5</span></td>
+                            <td class="uk-text-center uk-text-middle">36.8</td>
+                            <td class="uk-text-center uk-text-middle"><span>38</span></td>
+                            <td class="uk-text-center uk-text-middle">33.5</td>
+                        </tr>
+                        <tr>
+                            <td class="uk-text-bolder">Ganjar Pranowo</td>
+                            <td class="uk-text-center uk-text-middle">32.6</td>
+                            <td class="uk-text-center uk-text-middle">32.4</td>
+                            <td class="uk-text-center uk-text-middle">33.4</td>
+                            <td class="uk-text-center uk-text-middle"><span>34</span></td>
+                            <td class="uk-text-center uk-text-middle"><span>35.8</span></td>
+                            <td class="uk-text-center uk-text-middle">30.5</td>
+                            <td class="uk-text-center uk-text-middle">31.5</td>
+                            <td class="uk-text-center uk-text-middle">32.8</td>
+                            <td class="uk-text-center uk-text-middle"><span>40</span></td>
+                            <td class="uk-text-center uk-text-middle">34.2</td>
+                            <td class="uk-text-center uk-text-middle"><span>37.9</span></td>
+                        </tr>
+                        <tr>
+                            <td class="uk-text-bolder">Anies Baswedan</td>
+                            <td class="uk-text-center uk-text-middle">20.7</td>
+                            <td class="uk-text-center uk-text-middle">16.6</td>
+                            <td class="uk-text-center uk-text-middle">20.8</td>
+                            <td class="uk-text-center uk-text-middle">22.1</td>
+                            <td class="uk-text-center uk-text-middle">23.2</td>
+                            <td class="uk-text-center uk-text-middle">26.5</td>
+                            <td class="uk-text-center uk-text-middle">26.8</td>
+                            <td class="uk-text-center uk-text-middle">21.9</td>
+                            <td class="uk-text-center uk-text-middle">23.2</td>
+                            <td class="uk-text-center uk-text-middle">18.9</td>
+                            <td class="uk-text-center uk-text-middle">19.2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p class="img-caption uk-padding-small uk-align-center uk-width-3-5@m">*Saiful Mujani Research and Consulting survey was conducted on a sample of "critical" voters, regarded as those who have better access to sociopolitical information and tend to be educated and live in urban areas.</p>
+    
+
+        <div class="uk-container uk-container-default uk-width-3-5@m uk-padding-small">
+            
+            <p>Young politician Putra said Prabowo’s appeal to Gen-Z may stem from their perception of him as a formidable statesman given his military background and his big ideas for the country. His strong position may also grant him the advantage of commanding authority without the need for extensive power consolidation efforts.</p>
+
+            <p>Prabowo has also used social media to soften his public image, which helps with his appeal among younger voters. But how much this will alter the perception of other voters and translate into electoral success remains uncertain.</p>
+        </div>
+
+        <div id="chart_3" class="uk-flex uk-flex-center uk-align-center uk-margin-top uk-margin-bottom uk-width-3-5@m" uk-scrollspy="cls: uk-animation-slide-bottom; repeat: false">
+        </div>
+        <p class="img-caption uk-padding-small uk-align-center uk-width-3-5@m">Source: Data Reportal</p>
+
+        <!-- Candidates' profiles and their social media following -->
+
+        <div class="uk-section" id="profile">
+            <div class="uk-container uk-width-3-5@m uk-align-center uk-margin-remove-bottom">
+                <h3>Ganjar has the largest social media presence overall with the most followers in total</h3>
+                <h4>Hover over the pictures to learn more about each candidate</h4>
+      
+            </div>
+      
+      
+            <div class="uk-container uk-width-3-5@m uk-align-center">
+      
+              <div class="uk-grid-small uk-child-width-auto" uk-grid>
+                <div>
+                    <div class="uk-card flip-card">
+                      <div class="flip-card-inner">
+        
+                            <div class="uk-card uk-cover-container flip-card-front">
+                              <img class="uk-align-center" src="images/prabowo-bw.png" width="150" height="150" alt="Prabowo Subianto">    
+                            </div>
+        
+                            <div class="uk-panel uk-panel-scrollable flip-card-back">
+                                <p class="uk-text-small">This is Prabowo’s third attempt at the presidency, having previously lost to Jokowi. He is currently serving as defence minister and also chairs the Great Indonesia Movement Party (Gerindra).</p>
+                                <p class="uk-text-small">While his alleged human rights abuses during his military career remain controversial, these concerns may be less significant for first-time voters and younger voters who lack firsthand experience and are historically unaware.</p>
+                                <p class="uk-text-small">He has formed alliances with conservative Islamist groups in the past. But since his defeat in the 2019 election, he has rebranded himself and changed strategies to attract moderate Muslim voters and young voters in general.</p>
+                                <p class="uk-text-small">With his firm stance on security and economic issues, coupled with his political ambitions, Prabowo has built a sizable following and established himself as a prominent figure in Indonesian politics.</p> 
+                            </div>
+        
+                      </div>
+                    </div>
+                        
+                </div>
+                  
+                <div>
+                    <div class="uk-card"><div id="prabowoSocials"></div></div>
+                </div>
+        
+              </div>
+      
+            </div>
+            
+      
+      
+        <div class="uk-container uk-width-3-5@m uk-align-center">
+          <div class="uk-grid-small uk-child-width-auto" uk-grid>
+            <div>
+                <div class="uk-card flip-card">
+                  <div class="flip-card-inner">
+      
+                                    <div class="uk-card uk-cover-container flip-card-front">
+                                      <img class="uk-align-center" src="images/ganjar-bw.png" width="150" height="150" alt="Ganjar Pranowo">    
+                                    </div>
+      
+                                    <div class="uk-panel uk-panel-scrollable flip-card-back">
+                                      <p class="uk-text-small">Ganjar's candidacy was nominated by the leading Indonesian Democratic Party of Struggle (PDIP). He came from a humble background outside of the country’s political and military establishment. Despite this, he has risen through the ranks and is now serving as the governor of Central Java.</p>
+                                      <p class="uk-text-small">Seen as a strong custodian of President Jokowi’s legacy, Ganjar attracts support from those satisfied with the current administration. He has also gained popularity among young voters through his active presence on social media.</p>
+                                      <p class="uk-text-small">But his implication in recent controversy, expressing opposition to Israel’s participation in the U-20 football World Cup, which led to the event’s cancellation in Indonesia, has negatively impacted his electability.</p> 
+                                    </div>
+      
+                  </div>
+                </div>
+                    
+            </div>
+              
+            <div>
+                <div class="uk-card"><div id="ganjarSocials"></div></div>
+            </div>
+            
+          </div>
+        </div>  
+      
+      
+        <div class="uk-container uk-width-3-5@m uk-align-center">
+      
+          <div class="uk-grid-small uk-child-width-auto" uk-grid>
+            
+            <div>
+                <div class="uk-card flip-card">
+                  <div class="flip-card-inner">
+      
+                                    <div class="uk-card uk-cover-container flip-card-front">
+                                      <img class="uk-align-center" src="images/anies-bw.png" width="150" height="150" alt="Anies Baswedan">    
+                                    </div>
+      
+                                    <div class="uk-panel uk-panel-scrollable flip-card-back">
+                                      <p class="uk-text-small">Anies is running as an independent candidate but has the support of Nasdem Party, the Democratic Party, and the Islamist Prosperous Justice Party (PKS).</p>
+                                      <p class="uk-text-small">He is known for his moderate and progressive Muslim stance. He has gained recognition as an innovative politician who is dedicated to education through the Indonesia Teach programme which he initiated as former education minister.</p>
+                                      <p class="uk-text-small">But there are doubts on his commitment to his political principles. In the 2017 Jakarta gubernatorial election, Anies sought political endorsement from a controversial religious leader, which played a role in his victory.</p>
+                                      <p class="uk-text-small">His recent decline in electability can be attributed to his emphasis on the rhetoric of change which may not resonate strongly with the public given that the current administration's high satisfaction ratings.</p>
+                                    </div>
+      
+                  </div>
+                </div>
+                    
+            </div>
+              
+            <div>
+                <div class="uk-card"><div id="aniesSocials"></div></div>
+            </div>
+            
+          </div>
+        </div>
+            
+        <p class="img-caption uk-padding-small uk-align-center uk-width-3-5@m">*The figure is taken from his Gerindra party's account as Prabowo has no personal TikTok account.</p>
+          
+        </div> 
+      
+        
+
+        <div class="uk-container uk-container-large uk-container-default uk-width-3-5@m uk-padding-small uk-margin-xlarge-bottom">
+
+            <p>Sofie Syarief is a veteran journalist who has covered Indonesia's politics extensively. She compared the situation to the Philippines in 2022.</p>
+
+            <p>"We have in the Philippines, the son of Ferdinand Marcos is actually currently the president. So he won the election – again, the collective memory of what his father did to the country is basically nonexistent for a lot of youngsters," she said.
+
+            </p>"Because they don't try to look out for history and Marcos' campaign team definitely managed to whitewash his father's history. And I think that's what Prabowo is trying to do as well," she added.
+
+            <p>“I remember clearly what happened in 1997 and 1998. So, however you are going to sell me Prabowo I’m not going to buy it at all,” Syarief said.</p>
+
+            <p>Public image and digital engagement aside, young voters have yet to see any policy breakthrough from any of the candidates.</p>
+
+            <p>They face the prospect of casting their votes without truly knowing which candidate genuinely represents their interests, potentially widening the gap between the youth and politics.</p>
+
+            <p>They could be stuck with expressing their aspirations through social media and informal networks without the ability to turn them into tangible programmes.</p>
+        </div>
+
+        
+
+        
+
+    
+                    
+          
+    </div>
+        
+    
+    
+
+
+    <!-- Script for graphs -->
+    <script type="text/javascript">
+
+        // Chart One - Trust Levels in Democratic Institutions
+
+      let chartOne = echarts.init(document.getElementById('chart_1'));
+
+        const optionChartOne =  {
+            grid: {
+                top: '25%',
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                containLabel: true
+            },
+            title: {
+                text: 'Political Parties as the Least Trusted Institution',
+                subtext: 'Only six in 10 Indonesians trust political parties',
+                textStyle: {
+                fontSize: 18,
+                color: '#333333',
+                },
+                subtextStyle: {
+                fontSize: 15,
+                color: '#333333',
+                fontWeight: 200,
+                },
+                padding: [15,10]
+            },
+            xAxis: {
+                type: 'value',
+                show: false
+            },
+            yAxis: {
+                type: 'category',
+                name: '%',
+                nameTextStyle: {
+                color: '#333333',
+                fontWeight: 500,
+                fontSize: 14
+                },
+                data: ['Political Parties', 'House of Representatives', 'Senate', 'KPK (anti-corruption agency)', 'Supreme Court', 'President', 'Armed Forces'],
+                axisLabel: {
+                color: '#333333',
+                fontFamily: 'Helvetica',
+                fontWeight: 600,
+                },
+            },
+            series: [
+                {
+                type: 'bar',
+                barCategoryGap: '0%',
+                label: {
+                    show: true,
+                    fontSize: 13,
+                    color: '#ffffff',
+                    fontWeight: 500,
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [
+                    {value: 60.4, itemStyle: { color: '#fb443c'}}, 
+                    66.5, 70.4, 70.7, 78.6, 88.1, 95.2],
+                    itemStyle: {
+                        color: '#1c1c1c',
+                        borderColor: '#ffffff',
+                    },
+                }
+            ]
+        };
+
+    chartOne.setOption(optionChartOne);
+
+    window.onresize = function() {
+    chartOne.resize();
+    };
+
+    // Chart Two - Turnout Rate
+
+    let chartTwo = echarts.init(document.getElementById('chart_2'));
+
+    const optionChartTwo =  {
+        grid: {
+                    top: '25%',
+                    left: '2%',
+                    right: '2%',
+                    bottom: '3%',
+                    containLabel: true
+        },
+        title: {
+                    text: 'Record Turnout in Previous Election',
+                    subtext: 'Over 154 million Indonesians cast their ballots in 2019',
+                    textStyle: {
+                    fontSize: 18,
+                    color: '#333333',
+                    },
+                    subtextStyle: {
+                    width: 800,
+                    fontSize: 15,
+                    color: '#333333',
+                    fontWeight: 200,
+                    overflow: 'break',
+                    
+                    },
+                    padding: [15,10]
+        },
+        label: {
+            show: false,
+            },
+        legend: {
+            show: true,
+            itemHeight: 10,
+            icon: 'rect',
+            padding: 80
+        },
+        xAxis: {
+            type: 'category',
+            data: ['2004', '2009', '2014', '2019'],
+            axisLabel: {
+            inside: true,
+            color: '#333333',
+            fontSize: 13
+            },
+            axisTick: {
+            show: false
+            },
+        },
+        yAxis: {
+            type: 'value',
+            min: 60,
+            max: 100,
+            minInterval: 10,
+            silent: true,
+            axisLabel: {
+            color: '#7f7f7f',
+            inside: true,
+            showMinLabel: false,
+            fontSize: 13
+            }
+        },
+        series: [
+            {
+            name: 'Parliamentary',
+            endLabel: {
+                show: true,
+                fontSize: 16,
+                fontWeight: 600,
+                formatter: '{c} %'
+            },
+            data: [84.1, 71, 
+            {value: 75.1, label: { show: true}}, 
+            72.6],
+            itemStyle: {
+                color: '#1c1c1c'
+            },
+            type: 'line'
+            },
+            {
+            name: 'Presidential',
+            endLabel: {
+                show: true,
+                fontSize: 16,
+                fontWeight: 600,
+                formatter: '{c} %'
+            },
+            data: [68.5, 71.9, 
+            {value: 69.6, label: { show: true}}, 
+            81.9],
+            type: 'line',
+            itemStyle: {
+                color: '#fb443c'
+            },
+            },
+        ]
+    };
+
+
+    chartTwo.setOption(optionChartTwo);
+
+    window.onresize = function() {
+    chartTwo.resize();
+    };
+
+    // Chart Three - Social Media Users
+
+    let chartThree = echarts.init(document.getElementById('chart_3'));
+
+    const optionChartThree =  {
+        title: {
+                text: 'Social Media as a Strategic Platform for Political Campaigns',
+                subtext: 'Over 60 percent of social media users in Indonesia are part of the Gen-Z and Millennial cohorts',
+                textStyle: {
+                fontSize: 18,
+                color: '#333333',
+                },
+                subtextStyle: {
+                width: 800,
+                fontSize: 15,
+                color: '#333333',
+                fontWeight: 200,
+                overflow: 'break',
+                    },
+                    padding: [15,10]
+        },
+        grid: {
+            top: '15%',
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+            type: 'category',
+            
+            data: ['13-17', '18-24', '25-34', '35-44', 'Over 44'],
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLabel: {
+            color: '#333333',
+            fontFamily: 'Helvetica',
+            fontWeight: 600,
+            fontSize: 16
+            },
+
+            }
+        ],
+        yAxis: [
+            {
+            type: 'value',
+            axisLabel: {
+                showMinLabel: false,
+                formatter: '{value} M',
+                color: '#1c1c1c',
+                fontSize: 15
+            },
+            axisTick: {
+                show: true
+            },
+            splitLine: {
+                show: false
+            }
+            }
+        ],
+        series: [
+            {
+            type: 'bar',
+            barCategoryGap: '0%',
+            data: [16.5, 
+            {value: 53.4, itemStyle: { color: '#fb443c'}},
+            {value: 51.1, itemStyle: { color: '#fb443c'}},
+            27.9, 17.9],
+            itemStyle: {
+                color: '#1c1c1c',
+                
+            },
+            
+            }
+        ]
+        };
+
+
+    chartThree.setOption(optionChartThree);
+
+    window.onresize = function() {
+    chartThree.resize();
+    };
+    
+
+    // Chart Eight - Timeline
+
+    let chartEight = echarts.init(document.getElementById('chart_8'));
+
+    const optionChartEight =  {
+        
+        legend: {
+            top: '3%',
+            left: '17%',
+            textStyle: {
+                color: '#ffffff',
+                fontFamily: 'Helvetica'
+            }
+        },
+        label: {
+            show: true
+            },
+        grid: {
+            left: '5%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01],
+            splitLine: {
+                show: false
+            },
+            axisLabel: { show: false },
+        },
+        yAxis: {
+            type: 'category',
+            data: ['Devout', 'Experienced', 'Honest/anti-corruption', 'Innovative and performs well', 'Assertive/authoritative', 'Humble'],
+            axisLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: {
+                fontFamily: 'Helvetica',
+                color: '#ffffff',
+                fontSize: 11,
+            },
+        },
+        series: [
+            {
+            name: '2019',
+            type: 'bar',
+            data: [3, 8.7, 11.1, 15.2, 16.5, 39.2],
+            itemStyle: {
+                color: '#1c1c1c'
+            }
+            },
+            {
+            name: '2022',
+            type: 'bar',
+            data: [4.1, 16.8, 
+            {value: 34.8, itemStyle: { color: '#fb443c'}},
+            11.6, 12.4, 15.9],
+            itemStyle: {
+                color: '#ffb3b2'
+            }
+            },
+            
+        ]
+    };
+
+    chartEight.setOption(optionChartEight);
+
+    window.onresize = function() {
+    chartNine.resize();
+    };
+
+   
+
+    </script>
+
+    <!-- Scrollama -->
+    <script>
+        var scrolly = document.querySelector("#scrolly");
+        var article = scrolly.querySelector("article");
+        var step = article.querySelectorAll(".step");
+
+        // initialize the scrollama
+        var scroller = scrollama();
+
+        // scrollama event handlers
+        function handleStepEnter(response) {
+            // response = { element, direction, index }
+            console.log(response);
+            // add to color to current step
+            response.element.classList.add("is-active");
+        }
+
+        function handleStepExit(response) {
+            // response = { element, direction, index }
+            console.log(response);
+            // remove color from current step
+            response.element.classList.remove("is-active");
+        }
+
+        function init() {
+
+            step.forEach(function (step) {
+                var v = Math.floor((window.innerHeight) / 4);
+                step.style.padding = v + "px 0px";
+            });
+
+            // 1. setup the scroller with the bare-bones options
+            // 		this will also initialize trigger observations
+            // 2. bind scrollama event handlers (this can be chained like below)
+            scroller
+                .setup({
+                    step: "#scrolly article .step",
+                    debug: false,
+                    offset: 0.5
+                })
+                .onStepEnter(handleStepEnter)
+                .onStepExit(handleStepExit);
+
+        }
+
+        // kick things off
+        init();
+    </script>
+
+    <script>
+        // PRABOWO SOCIALS
+
+        // set the dimensions and margins of the graph
+        var margin = {top: 20, right: 30, bottom: 40, left: 90},
+            width = 460 - margin.left - margin.right,
+            height = 200 - margin.top - margin.bottom;
+        
+        // append the svg object to the body of the page
+        var svg = d3.select("#prabowoSocials")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        var prabowoData = [ {'platform':'Twitter','value':4.6},
+                        {'platform':'Instagram','value':5.4},
+                        {'platform':'TikTok','value':0.05}];
+
+        // Add X axis
+        var x = d3.scaleLinear()
+            .domain([0, 6000])
+            .range([ 0, width]);
+        
+        // Y axis
+        var y = d3.scaleBand()
+            .range([ 0, height ])
+            .domain(prabowoData.map(function(d) { return d.platform; }))
+            .padding(.1);
+        svg.append("g")
+            .call(d3.axisLeft(y))
+            .attr("class", "y_axis")
+        
+        //Bars
+        svg.selectAll("myRect")
+            .data(prabowoData)
+            .enter()
+            .append("rect")
+            .attr("x", x(0) )
+            .attr("y", function(d) { return y(d.platform); })
+            .attr("width", function(d) { return x(d.value) * 1000; })
+            .attr("height", y.bandwidth() )
+            .attr("fill", "#1c1c1c")
+
+        svg.selectAll("myRect")
+            .data(prabowoData)
+            .enter()
+            .append("text")
+            .attr("x", function(d) { return x(d.value) * 1000 + 5;})
+            .attr("y", function(d) { return y(d.platform) + 25; })
+            .text(function(d) {return d.value + "M";})
+            .attr("fill", "#333333")
+            .attr("font-family", "helvetica")
+            .attr("font-size", "14px")
+
+        svg.append("text")
+            .attr("transform", "translate(0,-5)")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("font-size", "16px")
+            .attr("font-weight", "200")
+            .text("Prabowo Subianto")
+            .attr("font-family", "helvetica")
+            .attr("fill", "#333333")
+
+        // GANJAR SOCIALS
+
+        // set the dimensions and margins of the graph
+        var margin = {top: 20, right: 30, bottom: 40, left: 90},
+            width = 460 - margin.left - margin.right,
+            height = 200 - margin.top - margin.bottom;
+        
+        // append the svg object to the body of the page
+        var svg = d3.select("#ganjarSocials")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        var ganjarData = [ {'platform':'Twitter','value':3.3},
+                        {'platform':'Instagram','value':5.7},
+                        {'platform':'TikTok','value':6}];
+
+        // Add X axis
+        var x = d3.scaleLinear()
+            .domain([0, 6000])
+            .range([ 0, width]);
+        
+        // Y axis
+        var y = d3.scaleBand()
+            .range([ 0, height ])
+            .domain(ganjarData.map(function(d) { return d.platform; }))
+            .padding(.1);
+        svg.append("g")
+            .call(d3.axisLeft(y))
+            .attr("class", "y_axis")
+        
+        //Bars
+        svg.selectAll("myRect")
+            .data(ganjarData)
+            .enter()
+            .append("rect")
+            .attr("x", x(0) )
+            .attr("y", function(d) { return y(d.platform); })
+            .attr("width", function(d) { return x(d.value) * 1000; })
+            .attr("height", y.bandwidth() )
+            .attr("fill", "#1c1c1c")
+
+        svg.selectAll("myRect")
+            .data(ganjarData)
+            .enter()
+            .append("text")
+            .attr("x", function(d) { return x(d.value) * 1000 + 5;})
+            .attr("y", function(d) { return y(d.platform) + 25; })
+            .text(function(d) {return d.value + "M";})
+            .attr("fill", "#333333")
+            .attr("font-family", "helvetica")
+            .attr("font-size", "14px")
+
+        svg.append("text")
+            .attr("transform", "translate(0,-5)")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("font-size", "16px")
+            .attr("font-weight", "200")
+            .text("Ganjar Pranowo")
+            .attr("font-family", "helvetica")
+            .attr("fill", "#333333")
+
+        
+        // ANIES SOCIALS
+
+        // set the dimensions and margins of the graph
+        var margin = {top: 20, right: 30, bottom: 40, left: 90},
+            width = 460 - margin.left - margin.right,
+            height = 200 - margin.top - margin.bottom;
+        
+        // append the svg object to the body of the page
+        var svg = d3.select("#aniesSocials")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        var aniesData = [ {'platform':'Twitter','value':4.9},
+                        {'platform':'Instagram','value':5.9},
+                        {'platform':'TikTok','value':0.03}];
+
+        // Add X axis
+        var x = d3.scaleLinear()
+            .domain([0, 6000])
+            .range([ 0, width]);
+        
+        // Y axis
+        var y = d3.scaleBand()
+            .range([ 0, height ])
+            .domain(aniesData.map(function(d) { return d.platform; }))
+            .padding(.1);
+        svg.append("g")
+            .call(d3.axisLeft(y))
+            .attr("class", "y_axis")
+        
+        //Bars
+        svg.selectAll("myRect")
+            .data(aniesData)
+            .enter()
+            .append("rect")
+            .attr("x", x(0) )
+            .attr("y", function(d) { return y(d.platform); })
+            .attr("width", function(d) { return x(d.value) * 1000; })
+            .attr("height", y.bandwidth() )
+            .attr("fill", "#1c1c1c")
+
+        svg.selectAll("myRect")
+            .data(aniesData)
+            .enter()
+            .append("text")
+            .attr("x", function(d) { return x(d.value) * 1000 + 5;})
+            .attr("y", function(d) { return y(d.platform) + 25; })
+            .text(function(d) {return d.value + "M";})
+            .attr("fill", "#333333")
+            .attr("font-family", "helvetica")
+            .attr("font-size", "14px")
+
+        svg.append("text")
+            .attr("transform", "translate(0,-5)")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("font-size", "16px")
+            .attr("font-weight", "200")
+            .text("Anies Baswedan")
+            .attr("font-family", "helvetica")
+            .attr("fill", "#333333")
+        
+    </script>
+
+</body>
+</html>

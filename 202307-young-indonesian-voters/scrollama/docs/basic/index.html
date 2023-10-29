@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Scrollama: Basic Example</title>
+	<meta name="description" content="Scrollama: Basic Example" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<style>
+
+		* {
+		box-sizing: border-box;
+		}
+
+		#intro {
+		margin-bottom: 320px;
+		}
+
+		#outro {
+		height: 640px;
+		}
+
+		#scrolly {
+			position: relative;
+		}
+
+		article {
+			position: relative;
+			padding: 0 0.5rem;
+			margin: 0 auto;
+			width: 60%;
+		}
+
+		.step {
+			margin: 0 auto 8rem auto;
+			width: 80%;
+			background-color: #1c1c1c;
+			color: #ffffff;
+		}
+
+		.step.is-active {
+			background-color: #ff4747;
+			color: #ffffff;
+		}
+
+		.step p {
+			text-align: left;
+			padding: 0rem 5rem 0rem 5rem;
+			font-family: 'Helvetica';
+			font-size: 1.1em;
+			line-height: 1.8;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<section id="intro"></section>
+		<section id="scrolly">
+			<article>
+				<div class="step" data-step="1">
+					
+						<p>More than 1 in 3 respondents prioritise anti-corruption and honesty as the most essential characteristic they seek in a national leader, a notable increase from the 2019 survey.</p>
+					
+				</div>
+				<div class="step" data-step="2">
+					<p>This finding indicates young people’s increased attention to issues of corruption within the government and their strong desire for the next administration to prioritise anti-corruption agendas.</p>
+				</div>
+				<div class="step" data-step="3">
+					<p>Additionally, young voters emphasise on a leader who can drive change, navigate crises, and present innovative policies.</p>
+				</div>
+				<div class="step" data-step="4">
+					<p>This underscores their underlying frustrations with the existing system, which they perceive as resistant to change and occupied by politicians who excel in rhetoric but struggle to develop concrete policies.</p>
+				</div>
+			</article>
+		</section>
+		<section id="outro"></section>
+	</main>
+
+	<script src="scrollama/docs/scrollama.min.js"></script>
+	<script>
+		var scrolly = document.querySelector("#scrolly");
+		var article = scrolly.querySelector("article");
+		var step = article.querySelectorAll(".step");
+
+		// initialize the scrollama
+		var scroller = scrollama();
+
+		// scrollama event handlers
+		function handleStepEnter(response) {
+			// response = { element, direction, index }
+			console.log(response);
+			// add to color to current step
+			response.element.classList.add("is-active");
+		}
+
+		function handleStepExit(response) {
+			// response = { element, direction, index }
+			console.log(response);
+			// remove color from current step
+			response.element.classList.remove("is-active");
+		}
+
+		function init() {
+	
+			step.forEach(function (step) {
+				var v = Math.floor((window.innerHeight) / 4);
+				step.style.padding = v + "px 0px";
+			});
+
+			// 1. setup the scroller with the bare-bones options
+			// 		this will also initialize trigger observations
+			// 2. bind scrollama event handlers (this can be chained like below)
+			scroller
+				.setup({
+					step: "#scrolly article .step",
+					debug: false,
+					offset: 0.5
+				})
+				.onStepEnter(handleStepEnter)
+				.onStepExit(handleStepExit);
+
+		}
+
+		// kick things off
+		init();
+	</script>
+</body>
+
+</html>
