@@ -353,17 +353,29 @@ Section 8 -- Interpretation.
 
 
 **Attributions**
+
 •  [CSIS survey](https://www.csis.or.id/publication/pemilih-muda-dalam-pemilihan-umum-2024-dinamis-adaptif-dan-responsif/) on young voters' preferences
+
 •  Candidates’ polls from [CNBC Indonesia report](https://www.cnbcindonesia.com/news/20230707044131-4-452094/14-survei-terbaru-capres-2024-prabowo-vs-ganjar-vs-anies)
+
 •  [Indikator survey](https://indikator.co.id/rilis-indikator-02-juli-2023/) on trust levels in institutions
+
 •  Turnout data from [International Institute for Democracy and Electoral Assistance](https://www.idea.int/data-tools/country-view/142/40)
+
 •  Social media users data from [Data Reportal](https://datareportal.com/reports/digital-2023-indonesia)
+
 •  [Transparency International](https://www.transparency.org/en/cpi/2022)
+
 •	[UIkit](https://github.com/uikit/uikit)
+
 •	[eCharts](https://echarts.apache.org/handbook/en/get-started/)
+
 •  [ai2html](http://ai2html.org/)
+
 •  [D3](https://d3js.org/d3.v4.js)
+
 •	[scrollama](https://github.com/russellsamora/scrollama)
+
 •	[jQuery](https://jquery.com/download/)
 
 
