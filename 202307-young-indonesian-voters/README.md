@@ -1,6 +1,6 @@
 The files in this folder are for displaying an HTML page containing a long-form article I wrote on young voters and their political representation in Indonesia in July 2023.
 
-Navigate to [the HTML file](/indonesia-young-voters-dilemma.html) to load or view the article.
+Navigate to [/indonesia-young-voters-dilemma.html](https://github.com/rrwils/young-indonesian-voters-article/blob/main/202307-young-indonesian-voters/indonesia-young-voters-dilemma.html) to load or view the article.
 
 Software and packages used in this project include:
 
